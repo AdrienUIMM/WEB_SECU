@@ -27,11 +27,3 @@ def artistes():
 
     cur.close()
     conn.close()
-
-    # Idéalement, vous utiliseriez un template Jinja2 ici:
-    # return render_template("artistes.html", artistes=artistes)
-    html = "<h1>Liste des artistes</h1><ul>"
-    for a in artistes:
-        html += f"<li>{a['nom']}</li>"
-    html += "</ul>"
-    return html
