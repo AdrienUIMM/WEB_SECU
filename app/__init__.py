@@ -12,7 +12,7 @@ def create_app():
 
     # Enregistre les Blueprints ici
     # Importation locale pour éviter les problèmes d'importation circulaire
-    from .routes import main as main_blueprint
+    from .controller.routes import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
     # Vous pouvez également initialiser d'autres extensions ici
