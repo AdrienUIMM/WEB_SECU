@@ -1,21 +1,18 @@
 from flask import Flask
 from dotenv import load_dotenv
-import os
+from . import config
 
-def create_app():
-    # Charge les variables d'environnement depuis le fichier .env
-    load_dotenv()
+# Charge les variables d'environnement depuis le fichier .env
+load_dotenv()
 
-    app = Flask(__name__)
-    # Charge la configuration depuis l'objet Config dans config.py
-    app.config.from_object('config.Config')
+app = Flask(__name__)
 
-    # Enregistre les Blueprints ici
-    # Importation locale pour éviter les problèmes d'importation circulaire
-    from .controller.routes import main as main_blueprint
-    app.register_blueprint(main_blueprint)
+# On remplit la configuration de Flask avec les variables de config.py
+app.config['DB_HOST'] = config.DB_HOST
+app.config['DB_USER'] = config.DB_USER
+app.config['DB_PASSWORD'] = config.DB_PASSWORD
+app.config['DB_NAME'] = config.DB_NAME
 
-    # Vous pouvez également initialiser d'autres extensions ici
-    # Par exemple, si vous utilisez SQLAlchemy, vous l'initialiseriez ici
-
-    return app
+# On importe les routes (le contrôleur) à la fin pour les enregistrer sur l'objet app
+# On utilise un import local ici pour éviter les imports circulaires
+from .controller import app as routes_controller

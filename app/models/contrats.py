@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy.orm import relationship
 from app.database.base import Base
 
 class Contrat(Base):
@@ -8,6 +9,8 @@ class Contrat(Base):
     formulaire = Column(String(1000), nullable=False)
     date_debut = Column(Date, nullable=False)
     date_fin = Column(Date)
+
+    artistes = relationship("Artiste", back_populates="contrat")
 
     def __repr__(self):
         return f"<Contrat(formulaire='{self.formulaire}')>"
