@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, current_app, request
+from flask import render_template, current_app, request
 from ..db import get_db_connection
+from app.database.engine import SessionLocal
+from app.models.artistes import Artiste
 
-# Crée un Blueprint pour les routes principales
-main = Blueprint('main', __name__)
+
 
 @main.route("/")
 def hello_world():
@@ -46,3 +47,14 @@ def show_artists():
         # Pas besoin de fermer conn ici, c'est géré par teardown_appcontext dans db.py
     
     return render_template("index.html", artists=artists)
+
+@main.route("/sqlalchemy")
+def sqlalchemy_artistes():
+    session = SessionLocal()
+    try:
+        artistes = session.query(Artiste).all()
+        return render_template('join-alchemy.html', artistes=artistes)
+    finally:
+        session.close()
+
+

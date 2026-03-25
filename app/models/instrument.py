@@ -14,3 +14,6 @@ class Instrument(Base):
     hauteur = Column(Integer, nullable=False, unique=False)
 
     artistes = relationship("Artiste", back_populates="instrument")
+
+    def __repr__(self):
+        return f"<Instrument(nom='{self.nom}')>"

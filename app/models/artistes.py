@@ -13,3 +13,8 @@ class Artiste(Base):
     id_groupe = Column(Integer, ForeignKey('Groupes.id_groupe'), nullable=False)
 
     instrument = relationship("Instrument", back_populates="artistes")
+    groupe = relationship("Groupe", back_populates="artistes")
+    contrat = relationship("Contrat", back_populates="artistes")
+    
+    def __repr__(self):
+        return f"<Artiste(nom='{self.nom}', prenom='{self.prenom}')>"
